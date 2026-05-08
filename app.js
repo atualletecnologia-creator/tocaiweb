@@ -40,6 +40,7 @@ function searchPDFs() {
 
 function renderFiles(files) {
   var results = document.getElementById('results');
+
   results.innerHTML = '';
 
   if (files.length === 0) {
@@ -75,7 +76,18 @@ function openPDF(fileId) {
     fileId +
     '/preview';
 
-  window.open(url, '_blank');
+  var modal = document.getElementById('pdfModal');
+  var viewer = document.getElementById('pdfViewer');
+
+  viewer.src = url;
+
+  modal.classList.add('open');
+}
+
+function closePDF() {
+  document.getElementById('pdfModal').classList.remove('open');
+
+  document.getElementById('pdfViewer').src = '';
 }
 
 function saveOffline(fileId) {
@@ -152,6 +164,7 @@ function addToCulto(id, name) {
   });
 
   saveCultoList();
+
   renderCultoList();
 
   alert('Adicionado à lista de culto');
@@ -169,6 +182,7 @@ function removeFromCulto(id) {
   cultoList = newList;
 
   saveCultoList();
+
   renderCultoList();
 }
 
@@ -225,11 +239,13 @@ function renderCultoList() {
 
 function toggleCultoList() {
   var panel = document.getElementById('cultoPanel');
+
   panel.classList.toggle('hidden');
 }
 
 function toggleUploadPanel() {
   var panel = document.getElementById('uploadPanel');
+
   panel.classList.toggle('hidden');
 }
 
@@ -254,14 +270,14 @@ function showCultoMusic() {
     music.id +
     '/preview';
 
+  document.getElementById('cultoViewer').src = url;
+
   document.getElementById('cultoCounter').innerHTML =
     (currentCultoIndex + 1) +
     ' / ' +
     cultoList.length +
     ' - ' +
     music.name;
-
-  window.open(url, '_blank');
 }
 
 function nextCultoMusic() {
@@ -280,4 +296,6 @@ function previousCultoMusic() {
 
 function closeCultoPlayer() {
   document.getElementById('cultoPlayer').classList.remove('open');
+
+  document.getElementById('cultoViewer').src = '';
 }
