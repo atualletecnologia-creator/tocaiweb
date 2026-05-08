@@ -144,7 +144,17 @@ button.secondary {
   margin-bottom: 10px;
 }
 
-#pdfModal {
+#uploadStatus {
+
+  color: #555;
+
+  font-size: 14px;
+
+  margin: 0;
+}
+
+#pdfModal,
+#cultoPlayer {
 
   position: fixed;
 
@@ -162,16 +172,26 @@ button.secondary {
   flex-direction: column;
 }
 
-#pdfHeader {
+#pdfHeader,
+#cultoPlayerHeader {
 
   padding: 10px;
 
   background: #000;
 
   border-bottom: 1px solid #333;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  color: white;
 }
 
-#pdfViewer {
+#pdfViewer,
+#cultoViewer {
 
   flex: 1;
 
@@ -180,4 +200,33 @@ button.secondary {
   border: none;
 
   background: white;
+}
+
+#cultoControls {
+
+  display: flex;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  background: #000;
+}
+
+#cultoControls button {
+
+  flex: 1;
+
+  margin: 0;
+}
+
+footer {
+
+  text-align: center;
+
+  padding: 24px 16px;
+
+  color: #777;
+
+  font-size: 13px;
 }

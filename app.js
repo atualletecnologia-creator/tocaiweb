@@ -1,20 +1,22 @@
 const API_KEY =
   "AIzaSyB5S62bfDT-aGKNWfKRrnbIGbh70wJ8Eug";
 
+const UPLOAD_URL =
+  'https://script.google.com/macros/s/AKfycbzTyWioDzkQ06ypuRI9ELmTeNXWYX7t_no5Y7N9kYEn8uKrd5yPMZh4MRhveYshK7r4-A/exec';
+
 var cultoList = [];
+var currentCultoIndex = 0;
 
 loadCultoList();
 
 function searchPDFs() {
 
   var folderId =
-
     document.getElementById(
       'instrumentSelect'
     ).value;
 
   var query =
-
     document.getElementById(
       'searchInput'
     ).value;
@@ -77,7 +79,6 @@ function searchPDFs() {
 function renderFiles(files) {
 
   var results =
-
     document.getElementById(
       'results'
     );
@@ -87,7 +88,6 @@ function renderFiles(files) {
   if (files.length === 0) {
 
     results.innerHTML =
-
       '<p>Nenhuma partitura encontrada.</p>';
 
     return;
@@ -150,25 +150,25 @@ function renderFiles(files) {
 
 function openPDF(fileId) {
 
-  var modal =
-
-    document.getElementById(
-      'pdfModal'
-    );
-
-  var viewer =
-
-    document.getElementById(
-      'pdfViewer'
-    );
-
-  viewer.src =
+  var url =
 
     'https://drive.google.com/file/d/' +
 
     fileId +
 
     '/preview';
+
+  var modal =
+    document.getElementById(
+      'pdfModal'
+    );
+
+  var viewer =
+    document.getElementById(
+      'pdfViewer'
+    );
+
+  viewer.src = url;
 
   modal.style.display =
     'flex';
@@ -178,7 +178,8 @@ function closePDF() {
 
   document.getElementById(
     'pdfModal'
-  ).style.display = 'none';
+  ).style.display =
+    'none';
 
   document.getElementById(
     'pdfViewer'
@@ -192,6 +193,125 @@ function saveOffline(fileId) {
     'https://drive.google.com/uc?export=download&id=' +
 
     fileId;
+}
+
+function uploadPDF() {
+
+  var input =
+    document.getElementById(
+      'uploadFile'
+    );
+
+  var status =
+    document.getElementById(
+      'uploadStatus'
+    );
+
+  var folderId =
+    document.getElementById(
+      'instrumentSelect'
+    ).value;
+
+  if (
+    !input.files ||
+    input.files.length === 0
+  ) {
+
+    alert(
+      'Escolha um PDF primeiro'
+    );
+
+    return;
+  }
+
+  var file =
+    input.files[0];
+
+  if (
+    file.type !==
+    'application/pdf'
+  ) {
+
+    alert(
+      'Envie apenas arquivos PDF'
+    );
+
+    return;
+  }
+
+  status.innerHTML =
+    'Enviando...';
+
+  var reader =
+    new FileReader();
+
+  reader.onload =
+    function () {
+
+      var formData =
+        new FormData();
+
+      formData.append(
+        'folderId',
+        folderId
+      );
+
+      formData.append(
+        'fileName',
+        file.name
+      );
+
+      formData.append(
+        'mimeType',
+        file.type
+      );
+
+      formData.append(
+        'fileBase64',
+        reader.result
+      );
+
+      fetch(
+        UPLOAD_URL,
+        {
+          method: 'POST',
+          body: formData
+        }
+      )
+
+      .then(function(response) {
+
+        return response.json();
+      })
+
+      .then(function(data) {
+
+        if (data.success) {
+
+          status.innerHTML =
+            'PDF enviado com sucesso!';
+
+          input.value = '';
+
+          searchPDFs();
+
+        } else {
+
+          status.innerHTML =
+            'Erro: ' + data.error;
+        }
+      })
+
+      .catch(function(error) {
+
+        console.log(error);
+
+        status.innerHTML =
+          'Erro ao enviar PDF';
+      });
+    };
+
+  reader.readAsDataURL(file);
 }
 
 function addToCulto(id, name) {
@@ -294,7 +414,6 @@ function loadCultoList() {
 function renderCultoList() {
 
   var container =
-
     document.getElementById(
       'cultoList'
     );
@@ -370,7 +489,6 @@ function renderCultoList() {
 function toggleCultoList() {
 
   var panel =
-
     document.getElementById(
       'cultoPanel'
     );
@@ -388,4 +506,120 @@ function toggleCultoList() {
     panel.className =
       'hidden panel';
   }
+}
+
+function toggleUploadPanel() {
+
+  var panel =
+    document.getElementById(
+      'uploadPanel'
+    );
+
+  if (
+    panel.className ===
+    'hidden panel'
+  ) {
+
+    panel.className =
+      'panel';
+
+  } else {
+
+    panel.className =
+      'hidden panel';
+  }
+}
+
+function openCultoPlayer() {
+
+  if (
+    cultoList.length === 0
+  ) {
+
+    alert(
+      'A lista está vazia'
+    );
+
+    return;
+  }
+
+  currentCultoIndex = 0;
+
+  showCultoMusic();
+}
+
+function showCultoMusic() {
+
+  var music =
+    cultoList[
+      currentCultoIndex
+    ];
+
+  var url =
+
+    'https://drive.google.com/file/d/' +
+
+    music.id +
+
+    '/preview';
+
+  document.getElementById(
+    'cultoViewer'
+  ).src = url;
+
+  document.getElementById(
+    'cultoPlayer'
+  ).style.display =
+    'flex';
+
+  document.getElementById(
+    'cultoCounter'
+  ).innerHTML =
+
+    (currentCultoIndex + 1) +
+
+    ' / ' +
+
+    cultoList.length +
+
+    ' - ' +
+
+    music.name;
+}
+
+function nextCultoMusic() {
+
+  if (
+    currentCultoIndex <
+    cultoList.length - 1
+  ) {
+
+    currentCultoIndex++;
+
+    showCultoMusic();
+  }
+}
+
+function previousCultoMusic() {
+
+  if (
+    currentCultoIndex > 0
+  ) {
+
+    currentCultoIndex--;
+
+    showCultoMusic();
+  }
+}
+
+function closeCultoPlayer() {
+
+  document.getElementById(
+    'cultoPlayer'
+  ).style.display =
+    'none';
+
+  document.getElementById(
+    'cultoViewer'
+  ).src = '';
 }
