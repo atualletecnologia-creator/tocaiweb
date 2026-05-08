@@ -1,183 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tocai</title>
-
-<link rel="stylesheet"
-href="style.css">
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-
   <h1>Tocai</h1>
-
-  <p>
-    Facilitando a vida do Instrumentista
-  </p>
-
+  <p>Facilitando a vida do Instrumentista</p>
 </header>
 
 <main>
 
-  <button class="secondary"
-  onclick="toggleCultoList()">
+  <button class="secondary" onclick="toggleCultoList()">Lista de Culto</button>
 
-    Lista de Culto
-
-  </button>
-
-  <section id="cultoPanel"
-  class="hidden panel">
-
-    <h2>
-      Lista de Culto
-    </h2>
-
-    <button onclick="openCultoPlayer()">
-      Abrir Lista
-    </button>
-
+  <section id="cultoPanel" class="hidden panel">
+    <h2>Lista de Culto</h2>
+    <button onclick="openCultoPlayer()">Abrir Lista</button>
     <div id="cultoList"></div>
-
   </section>
 
-  <button class="secondary"
-  onclick="toggleUploadPanel()">
+  <button class="secondary" onclick="toggleUploadPanel()">Enviar partitura</button>
 
-    Enviar partitura
+  <section id="uploadPanel" class="hidden panel">
+    <h2>Enviar partitura</h2>
 
-  </button>
+    <input type="file" id="uploadFile" accept="application/pdf">
 
-  <section id="uploadPanel"
-  class="hidden panel">
-
-    <h2>
-      Enviar partitura
-    </h2>
-
-    <input
-      type="file"
-      id="uploadFile"
-      accept="application/pdf"
-    >
-
-    <button onclick="uploadPDF()">
-      Enviar PDF para este instrumento
-    </button>
+    <button onclick="uploadPDF()">Enviar PDF para este instrumento</button>
 
     <p id="uploadStatus"></p>
-
   </section>
 
   <select id="instrumentSelect">
-
-    <option value="1X7sPgqAriceWzN2bv3s7e-if4QovQSBK">
-      Cello
-    </option>
-
-    <option value="13VCpSJAEqEOw5i5OGhXFceLFBVpsziYF">
-      Clarinete
-    </option>
-
-    <option value="1U7VU0Xmhmk0F2tuoZMNZRmJ0K5uxb-vg">
-      Flauta
-    </option>
-
-    <option value="1N7iV-hi5XnZmgYXZExx3Bw-dqjWX_Qji">
-      Saxofone
-    </option>
-
-    <option value="1WhfEFKgtjI-XYfB2kDkLzBPGDC3YdvYd">
-      Trompete
-    </option>
-
-    <option value="1C1Z-e-4BOunTLRuDdN4r1yghK-0tay-h">
-      Viola
-    </option>
-
-    <option value="1vlF9gzoRMXKQ6j550x0jWqutfhw2_Bd9">
-      Violino
-    </option>
-
-    <option value="1-W7n5LrIZwXyfA8UaKDnegIkl2AyZOXb">
-      Trombone
-    </option>
-
+    <option value="1X7sPgqAriceWzN2bv3s7e-if4QovQSBK">Cello</option>
+    <option value="13VCpSJAEqEOw5i5OGhXFceLFBVpsziYF">Clarinete</option>
+    <option value="1U7VU0Xmhmk0F2tuoZMNZRmJ0K5uxb-vg">Flauta</option>
+    <option value="1N7iV-hi5XnZmgYXZExx3Bw-dqjWX_Qji">Saxofone</option>
+    <option value="1WhfEFKgtjI-XYfB2kDkLzBPGDC3YdvYd">Trompete</option>
+    <option value="1C1Z-e-4BOunTLRuDdN4r1yghK-0tay-h">Viola</option>
+    <option value="1vlF9gzoRMXKQ6j550x0jWqutfhw2_Bd9">Violino</option>
+    <option value="1-W7n5LrIZwXyfA8UaKDnegIkl2AyZOXb">Trombone</option>
   </select>
 
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Buscar partitura..."
-  >
+  <input type="text" id="searchInput" placeholder="Buscar partitura...">
 
-  <button onclick="searchPDFs()">
-    Buscar
-  </button>
+  <button onclick="searchPDFs()">Buscar</button>
 
   <div id="results"></div>
 
 </main>
 
 <footer>
-
-  © 2026 Atualle Tecnologia.
-  Todos os direitos reservados.
-
+  © 2026 Atualle Tecnologia. Todos os direitos reservados.
 </footer>
 
-<div id="pdfModal"
-style="display: none;">
-
+<div id="pdfModal" class="modal">
   <div id="pdfHeader">
-
-    <button onclick="closePDF()">
-      Fechar
-    </button>
-
+    <button onclick="closePDF()">Fechar</button>
   </div>
 
   <iframe id="pdfViewer"></iframe>
-
 </div>
 
-<div id="cultoPlayer"
-style="display: none;">
-
+<div id="cultoPlayer" class="modal">
   <div id="cultoPlayerHeader">
-
-    <button onclick="closeCultoPlayer()">
-      Fechar
-    </button>
-
+    <button onclick="closeCultoPlayer()">Fechar</button>
     <span id="cultoCounter"></span>
-
   </div>
 
   <iframe id="cultoViewer"></iframe>
 
   <div id="cultoControls">
-
-    <button onclick="previousCultoMusic()">
-      Anterior
-    </button>
-
-    <button onclick="nextCultoMusic()">
-      Próxima
-    </button>
-
+    <button onclick="previousCultoMusic()">Anterior</button>
+    <button onclick="nextCultoMusic()">Próxima</button>
   </div>
-
 </div>
 
 <script src="app.js"></script>
