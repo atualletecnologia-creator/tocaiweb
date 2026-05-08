@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0">
+
+<title>Tocai</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+  <h1>Tocai</h1>
+
+  <p>
+    Partituras para músicos
+  </p>
+
+</header>
+
+<main>
+
+  <button class="secondary"
+  onclick="toggleCultoList()">
+
+    Lista de Culto
+
+  </button>
+
+  <section id="cultoPanel"
+  class="hidden panel">
+
+    <h2>
+      Lista de Culto
+    </h2>
+
+    <div id="cultoList"></div>
+
+  </section>
+
+  <select id="instrumentSelect">
+
+    <option value="1X7sPgqAriceWzN2bv3s7e-if4QovQSBK">
+      Cello
+    </option>
+
+    <option value="13VCpSJAEqEOw5i5OGhXFceLFBVpsziYF">
+      Clarinete
+    </option>
+
+    <option value="1U7VU0Xmhmk0F2tuoZMNZRmJ0K5uxb-vg">
+      Flauta
+    </option>
+
+    <option value="1N7iV-hi5XnZmgYXZExx3Bw-dqjWX_Qji">
+      Saxofone
+    </option>
+
+    <option value="1WhfEFKgtjI-XYfB2kDkLzBPGDC3YdvYd">
+      Trompete
+    </option>
+
+    <option value="1C1Z-e-4BOunTLRuDdN4r1yghK-0tay-h">
+      Viola
+    </option>
+
+    <option value="1vlF9gzoRMXKQ6j550x0jWqutfhw2_Bd9">
+      Violino
+    </option>
+
+    <option value="1-W7n5LrIZwXyfA8UaKDnegIkl2AyZOXb">
+      Trombone
+    </option>
+
+  </select>
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Buscar partitura..."
+  >
+
+  <button onclick="searchPDFs()">
+    Buscar
+  </button>
+
+  <div id="results"></div>
+
+</main>
+
+<div id="pdfModal">
+
+  <div id="pdfHeader">
+
+    <button onclick="closePDF()">
+      Fechar
+    </button>
+
+  </div>
+
+  <iframe id="pdfViewer"></iframe>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

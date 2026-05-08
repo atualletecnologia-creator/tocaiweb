@@ -1,0 +1,183 @@
+body {
+
+  margin: 0;
+
+  font-family: Arial, sans-serif;
+
+  background: #f7f7f7;
+
+  color: #222;
+}
+
+header {
+
+  background: white;
+
+  padding: 24px 16px;
+
+  text-align: center;
+
+  border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+
+  margin: 0;
+
+  font-size: 32px;
+
+  font-weight: 700;
+}
+
+header p {
+
+  margin: 6px 0 0;
+
+  color: #777;
+}
+
+main {
+
+  padding: 16px;
+
+  max-width: 720px;
+
+  margin: auto;
+}
+
+select,
+input,
+button {
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 14px;
+
+  margin-bottom: 12px;
+
+  font-size: 16px;
+
+  border-radius: 10px;
+}
+
+select,
+input {
+
+  border: 1px solid #ddd;
+
+  background: white;
+}
+
+button {
+
+  border: none;
+
+  background: #111;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+button.secondary {
+
+  background: white;
+
+  color: #111;
+
+  border: 1px solid #ddd;
+}
+
+.card,
+.panel,
+.culto-item {
+
+  background: white;
+
+  border: 1px solid #e5e5e5;
+
+  border-radius: 14px;
+
+  padding: 14px;
+
+  margin-bottom: 12px;
+}
+
+.card h3 {
+
+  margin: 0;
+
+  font-size: 17px;
+}
+
+.hidden {
+
+  display: none;
+}
+
+.actions {
+
+  display: flex;
+
+  gap: 8px;
+
+  margin-top: 12px;
+}
+
+.actions button {
+
+  flex: 1;
+
+  margin: 0;
+
+  padding: 12px;
+
+  font-size: 14px;
+}
+
+.culto-item strong {
+
+  display: block;
+
+  margin-bottom: 10px;
+}
+
+#pdfModal {
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: #111;
+
+  z-index: 99999;
+
+  display: none;
+
+  flex-direction: column;
+}
+
+#pdfHeader {
+
+  padding: 10px;
+
+  background: #000;
+
+  border-bottom: 1px solid #333;
+}
+
+#pdfViewer {
+
+  flex: 1;
+
+  width: 100%;
+
+  border: none;
+
+  background: white;
+}
