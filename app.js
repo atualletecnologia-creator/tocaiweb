@@ -40,7 +40,6 @@ function searchPDFs() {
 
 function renderFiles(files) {
   var results = document.getElementById('results');
-
   results.innerHTML = '';
 
   if (files.length === 0) {
@@ -76,16 +75,7 @@ function openPDF(fileId) {
     fileId +
     '/preview';
 
-  var modal = document.getElementById('pdfModal');
-  var viewer = document.getElementById('pdfViewer');
-
-  viewer.src = url;
-  modal.classList.add('open');
-}
-
-function closePDF() {
-  document.getElementById('pdfModal').classList.remove('open');
-  document.getElementById('pdfViewer').src = '';
+  window.open(url, '_blank');
 }
 
 function saveOffline(fileId) {
@@ -177,6 +167,7 @@ function removeFromCulto(id) {
   }
 
   cultoList = newList;
+
   saveCultoList();
   renderCultoList();
 }
@@ -234,13 +225,11 @@ function renderCultoList() {
 
 function toggleCultoList() {
   var panel = document.getElementById('cultoPanel');
-
   panel.classList.toggle('hidden');
 }
 
 function toggleUploadPanel() {
   var panel = document.getElementById('uploadPanel');
-
   panel.classList.toggle('hidden');
 }
 
@@ -251,6 +240,9 @@ function openCultoPlayer() {
   }
 
   currentCultoIndex = 0;
+
+  document.getElementById('cultoPlayer').classList.add('open');
+
   showCultoMusic();
 }
 
@@ -262,15 +254,14 @@ function showCultoMusic() {
     music.id +
     '/preview';
 
-  document.getElementById('cultoViewer').src = url;
-  document.getElementById('cultoPlayer').classList.add('open');
-
   document.getElementById('cultoCounter').innerHTML =
     (currentCultoIndex + 1) +
     ' / ' +
     cultoList.length +
     ' - ' +
     music.name;
+
+  window.open(url, '_blank');
 }
 
 function nextCultoMusic() {
@@ -289,5 +280,4 @@ function previousCultoMusic() {
 
 function closeCultoPlayer() {
   document.getElementById('cultoPlayer').classList.remove('open');
-  document.getElementById('cultoViewer').src = '';
 }
