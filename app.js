@@ -170,16 +170,14 @@ function openPDF(fileId) {
 
   viewer.src = url;
 
-  modal.style.display =
-    'flex';
+  modal.className = 'open';
 }
 
 function closePDF() {
 
   document.getElementById(
     'pdfModal'
-  ).style.display =
-    'none';
+  ).className = '';
 
   document.getElementById(
     'pdfViewer'
@@ -569,8 +567,7 @@ function showCultoMusic() {
 
   document.getElementById(
     'cultoPlayer'
-  ).style.display =
-    'flex';
+  ).className = 'open';
 
   document.getElementById(
     'cultoCounter'
@@ -616,8 +613,7 @@ function closeCultoPlayer() {
 
   document.getElementById(
     'cultoPlayer'
-  ).style.display =
-    'none';
+  ).className = '';
 
   document.getElementById(
     'cultoViewer'

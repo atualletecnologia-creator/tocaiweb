@@ -172,6 +172,12 @@ button.secondary {
   flex-direction: column;
 }
 
+#pdfModal.open,
+#cultoPlayer.open {
+
+  display: flex;
+}
+
 #pdfHeader,
 #cultoPlayerHeader {
 
@@ -229,4 +235,51 @@ footer {
   color: #777;
 
   font-size: 13px;
+}
+
+@media (max-width: 480px) {
+
+  header h1 {
+
+    font-size: 28px;
+  }
+
+  main {
+
+    padding: 12px;
+  }
+
+  .actions {
+
+    flex-direction: column;
+  }
+
+  .actions button {
+
+    width: 100%;
+  }
+
+  select,
+  input,
+  button {
+
+    font-size: 15px;
+
+    padding: 13px;
+  }
+
+  #pdfHeader,
+  #cultoPlayerHeader {
+
+    display: block;
+  }
+
+  #cultoCounter {
+
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 13px;
+  }
 }
