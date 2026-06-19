@@ -293,6 +293,17 @@ function renderCultoList() {
   }
 }
 
+
+function clearCultoList() {
+  if (!confirm('Deseja limpar toda a lista de culto?')) {
+    return;
+  }
+
+  cultoList = [];
+  saveCultoList();
+  renderCultoList();
+}
+
 function toggleCultoList() {
   var panel = document.getElementById('cultoPanel');
 

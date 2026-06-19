@@ -226,3 +226,42 @@ footer {
 .modal.show-controls .control-hotspot {
   background: rgba(255, 255, 255, 0.15);
 }
+
+
+/* Melhor leitura do PDF no iPhone quando virar para horizontal */
+.modal {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#pdfViewer,
+#cultoViewer {
+  height: 100%;
+}
+
+@media screen and (orientation: landscape) {
+  #pdfViewer,
+  #cultoViewer {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #pdfHeader,
+  #cultoPlayerHeader,
+  #cultoControls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100001;
+  }
+
+  #pdfHeader,
+  #cultoPlayerHeader {
+    top: 0;
+  }
+
+  #cultoControls {
+    bottom: 0;
+  }
+}
