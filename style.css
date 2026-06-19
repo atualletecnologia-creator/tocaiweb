@@ -401,6 +401,7 @@ button.secondary {
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -445,9 +446,11 @@ button.secondary {
 
 #pdfViewer,
 #cultoViewer {
-  flex: 1;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   border: none;
   background: white;
 }
@@ -492,13 +495,36 @@ footer {
 }
 
 @media screen and (orientation: landscape) {
+
+  #pdfModal,
+  #cultoPlayer {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  #pdfHeader,
+  #cultoPlayerHeader,
+  #cultoControls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+
   #pdfHeader,
   #cultoPlayerHeader {
-    min-height: 46px;
+    top: 0;
+  }
+
+  #cultoControls {
+    bottom: 0;
   }
 
   #pdfViewer,
   #cultoViewer {
+    width: 100vw;
     height: 100vh;
+    height: 100dvh;
   }
 }
