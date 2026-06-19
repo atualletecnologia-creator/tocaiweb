@@ -191,3 +191,38 @@ footer {
     font-size: 13px;
   }
 }
+
+/* Controles do leitor: ficam escondidos para não atrapalhar a leitura */
+.modal #pdfHeader,
+.modal #cultoPlayerHeader,
+.modal #cultoControls {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal.show-controls #pdfHeader,
+.modal.show-controls #cultoPlayerHeader,
+.modal.show-controls #cultoControls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.control-hotspot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  z-index: 100000;
+  font-size: 20px;
+}
+
+.modal.show-controls .control-hotspot {
+  background: rgba(255, 255, 255, 0.15);
+}

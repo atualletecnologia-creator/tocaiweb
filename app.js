@@ -5,8 +5,35 @@ const UPLOAD_URL =
 
 var cultoList = [];
 var currentCultoIndex = 0;
+var pdfControlsTimeout = null;
+var cultoControlsTimeout = null;
 
 loadCultoList();
+setupSearchEnter();
+
+function setupSearchEnter() {
+  setTimeout(function () {
+    var input = document.getElementById('searchInput');
+
+    if (!input) {
+      return;
+    }
+
+    input.onkeydown = function (event) {
+      event = event || window.event;
+
+      var key = event.key || event.keyCode;
+
+      if (key === 'Enter' || key === 13) {
+        if (event.preventDefault) {
+          event.preventDefault();
+        }
+
+        searchPDFs();
+      }
+    };
+  }, 100);
+}
 
 function searchPDFs() {
   var folderId = document.getElementById('instrumentSelect').value;
@@ -82,12 +109,41 @@ function openPDF(fileId) {
   viewer.src = url;
 
   modal.classList.add('open');
+  showPDFControls();
 }
 
 function closePDF() {
-  document.getElementById('pdfModal').classList.remove('open');
+  var modal = document.getElementById('pdfModal');
+
+  modal.classList.remove('open');
+  modal.classList.remove('show-controls');
 
   document.getElementById('pdfViewer').src = '';
+
+  clearTimeout(pdfControlsTimeout);
+}
+
+function showPDFControls() {
+  var modal = document.getElementById('pdfModal');
+
+  modal.classList.add('show-controls');
+
+  clearTimeout(pdfControlsTimeout);
+
+  pdfControlsTimeout = setTimeout(function () {
+    modal.classList.remove('show-controls');
+  }, 3000);
+}
+
+function togglePDFControls() {
+  var modal = document.getElementById('pdfModal');
+
+  if (modal.classList.contains('show-controls')) {
+    modal.classList.remove('show-controls');
+    clearTimeout(pdfControlsTimeout);
+  } else {
+    showPDFControls();
+  }
 }
 
 function saveOffline(fileId) {
@@ -260,6 +316,7 @@ function openCultoPlayer() {
   document.getElementById('cultoPlayer').classList.add('open');
 
   showCultoMusic();
+  showCultoControls();
 }
 
 function showCultoMusic() {
@@ -280,10 +337,34 @@ function showCultoMusic() {
     music.name;
 }
 
+function showCultoControls() {
+  var player = document.getElementById('cultoPlayer');
+
+  player.classList.add('show-controls');
+
+  clearTimeout(cultoControlsTimeout);
+
+  cultoControlsTimeout = setTimeout(function () {
+    player.classList.remove('show-controls');
+  }, 3000);
+}
+
+function toggleCultoControls() {
+  var player = document.getElementById('cultoPlayer');
+
+  if (player.classList.contains('show-controls')) {
+    player.classList.remove('show-controls');
+    clearTimeout(cultoControlsTimeout);
+  } else {
+    showCultoControls();
+  }
+}
+
 function nextCultoMusic() {
   if (currentCultoIndex < cultoList.length - 1) {
     currentCultoIndex++;
     showCultoMusic();
+    showCultoControls();
   }
 }
 
@@ -291,11 +372,17 @@ function previousCultoMusic() {
   if (currentCultoIndex > 0) {
     currentCultoIndex--;
     showCultoMusic();
+    showCultoControls();
   }
 }
 
 function closeCultoPlayer() {
-  document.getElementById('cultoPlayer').classList.remove('open');
+  var player = document.getElementById('cultoPlayer');
+
+  player.classList.remove('open');
+  player.classList.remove('show-controls');
 
   document.getElementById('cultoViewer').src = '';
+
+  clearTimeout(cultoControlsTimeout);
 }
