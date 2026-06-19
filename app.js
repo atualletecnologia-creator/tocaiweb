@@ -250,11 +250,12 @@ function saveCultoList() {
 }
 
 function loadCultoList() {
-  var saved = localStorage.getItem('tocai_culto_list');
 
-  if (saved) {
-    cultoList = JSON.parse(saved);
-  }
+  cultoList = [];
+
+  localStorage.removeItem(
+    'tocai_culto_list'
+  );
 
   setTimeout(function () {
     renderCultoList();
@@ -397,3 +398,13 @@ function closeCultoPlayer() {
 
   clearTimeout(cultoControlsTimeout);
 }
+window.addEventListener(
+  'beforeunload',
+  function () {
+
+    localStorage.removeItem(
+      'tocai_culto_list'
+    );
+
+  }
+);
