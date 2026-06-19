@@ -243,12 +243,7 @@ function removeFromCulto(id) {
 }
 
 function saveCultoList() {
-  localStorage.setItem(
-    'tocai_culto_list',
-    JSON.stringify(cultoList)
-  );
 }
-
 function loadCultoList() {
 
   cultoList = [];
