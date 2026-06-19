@@ -1,117 +1,407 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --burgundy: #6D071A;
+  --burgundy-light: #8E1C31;
+  --white: #FFFFFF;
+  --bg: #F7F7F7;
+  --text: #1E1E1E;
+  --muted: #777777;
+  --border: #E6E2E2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
-  color: #222;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-header {
-  background: white;
-  padding: 24px 16px;
+.hidden {
+  display: none !important;
+}
+
+/* LOGO */
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.brand.small {
+  gap: 10px;
+}
+
+.brand-mark {
+  position: relative;
+  width: 58px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.brand.small .brand-mark {
+  width: 32px;
+  height: 48px;
+  gap: 4px;
+}
+
+.brand-mark span {
+  display: block;
+  width: 8px;
+  border-radius: 20px;
+  background: currentColor;
+}
+
+.brand.small .brand-mark span {
+  width: 5px;
+}
+
+.brand-mark span:nth-child(1),
+.brand-mark span:nth-child(5) {
+  height: 34px;
+}
+
+.brand-mark span:nth-child(2),
+.brand-mark span:nth-child(4) {
+  height: 56px;
+}
+
+.brand-mark span:nth-child(3) {
+  height: 80px;
+}
+
+.brand.small .brand-mark span:nth-child(1),
+.brand.small .brand-mark span:nth-child(5) {
+  height: 20px;
+}
+
+.brand.small .brand-mark span:nth-child(2),
+.brand.small .brand-mark span:nth-child(4) {
+  height: 32px;
+}
+
+.brand.small .brand-mark span:nth-child(3) {
+  height: 44px;
+}
+
+.brand-mark i {
+  position: absolute;
+  bottom: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.brand.small .brand-mark i {
+  width: 10px;
+  height: 10px;
+  bottom: -3px;
+}
+
+.brand-name {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 8px;
+}
+
+.brand.small .brand-name {
+  font-size: 20px;
+  letter-spacing: 4px;
+}
+
+.brand-white {
+  color: var(--white);
+}
+
+.brand-burgundy {
+  color: var(--burgundy);
+}
+
+/* WELCOME */
+
+.welcome-screen {
+  min-height: 100vh;
+  background: var(--burgundy);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.welcome-content {
+  width: 100%;
+  max-width: 420px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 32px;
+.welcome-subtitle {
+  margin: 18px 0 34px;
+  color: rgba(255,255,255,0.82);
+  font-size: 15px;
+}
+
+.welcome-screen select,
+.welcome-screen button {
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  padding: 16px;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.welcome-screen select {
+  margin-bottom: 14px;
+  background: var(--white);
+  color: var(--text);
+}
+
+.welcome-screen button {
+  background: var(--white);
+  color: var(--burgundy);
   font-weight: 700;
 }
 
-header p {
-  margin: 6px 0 0;
-  color: #777;
+/* APP */
+
+.app-screen {
+  min-height: 100vh;
+  background: var(--white);
 }
 
-main {
-  padding: 16px;
-  max-width: 720px;
+.app-header {
+  height: 76px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.menu-button {
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  border-radius: 14px;
+  border: none;
+  background: var(--bg);
+  color: var(--burgundy);
+  font-size: 24px;
+}
+
+.header-spacer {
+  width: 48px;
+}
+
+.app-main {
+  padding: 24px 16px 10px;
+  max-width: 760px;
   margin: auto;
 }
 
-select,
-input,
-button {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 14px;
+.search-box {
+  display: flex;
+  gap: 10px;
   margin-bottom: 12px;
-  font-size: 16px;
-  border-radius: 10px;
 }
 
+.search-box input {
+  flex: 1;
+}
+
+.search-box button {
+  width: 110px;
+}
+
+#selectedInstrumentLabel {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+input,
 select,
-input {
-  border: 1px solid #ddd;
-  background: white;
+button {
+  font-family: inherit;
+  font-size: 15px;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 16px;
+  padding: 15px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--burgundy-light);
 }
 
 button {
   border: none;
-  background: #111;
-  color: white;
+  background: var(--burgundy);
+  color: var(--white);
+  border-radius: 16px;
+  padding: 15px;
   cursor: pointer;
+  font-weight: 600;
 }
 
 button.secondary {
-  background: white;
-  color: #111;
-  border: 1px solid #ddd;
+  background: var(--white);
+  color: var(--burgundy);
+  border: 1px solid var(--border);
 }
 
 .card,
-.panel,
 .culto-item {
-  background: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 14px;
-  padding: 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
   margin-bottom: 12px;
 }
 
 .card h3 {
-  margin: 0;
-  font-size: 17px;
-}
-
-.hidden {
-  display: none;
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .actions {
   display: flex;
   gap: 8px;
-  margin-top: 12px;
 }
 
 .actions button {
   flex: 1;
-  margin: 0;
   padding: 12px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-.culto-item strong {
+/* MENU */
+
+.side-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: none;
+  z-index: 99;
+}
+
+.side-menu-overlay.open {
   display: block;
-  margin-bottom: 10px;
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -310px;
+  width: 290px;
+  height: 100vh;
+  background: var(--burgundy);
+  color: var(--white);
+  z-index: 100;
+  padding: 24px 18px;
+  transition: left 0.25s ease;
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+.menu-brand {
+  padding: 14px 0 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  margin-bottom: 20px;
+}
+
+.side-menu button {
+  width: 100%;
+  background: transparent;
+  color: var(--white);
+  text-align: left;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  padding: 14px;
+}
+
+.side-menu button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* PAGE PANELS */
+
+.page-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: var(--white);
+  padding: 16px;
+  overflow: auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.page-header button {
+  width: auto;
+  background: var(--bg);
+  color: var(--burgundy);
+}
+
+.page-header h2 {
+  margin: 0;
+  color: var(--burgundy);
+  font-size: 22px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
 }
 
 #uploadStatus {
-  color: #555;
+  color: var(--muted);
   font-size: 14px;
-  margin: 0;
 }
+
+/* MODALS */
 
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: #111;
   z-index: 99999;
   display: none;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .modal.open {
@@ -119,20 +409,45 @@ button.secondary {
 }
 
 #pdfHeader,
-#cultoPlayerHeader {
-  padding: 10px;
-  background: #000;
-  border-bottom: 1px solid #333;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#cultoPlayerHeader,
+#cultoControls {
+  background: rgba(0,0,0,0.92);
   color: white;
+  padding: 10px;
+  transition: opacity 0.25s;
+}
+
+#pdfModal #pdfHeader,
+#cultoPlayer #cultoPlayerHeader,
+#cultoPlayer #cultoControls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#pdfModal.show-controls #pdfHeader,
+#cultoPlayer.show-controls #cultoPlayerHeader,
+#cultoPlayer.show-controls #cultoControls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#pdfHeader button,
+#cultoPlayerHeader button,
+#cultoControls button {
+  margin: 0;
+}
+
+#cultoPlayerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #pdfViewer,
 #cultoViewer {
   flex: 1;
   width: 100%;
+  height: 100%;
   border: none;
   background: white;
 }
@@ -140,29 +455,31 @@ button.secondary {
 #cultoControls {
   display: flex;
   gap: 10px;
-  padding: 10px;
-  background: #000;
 }
 
-#cultoControls button {
-  flex: 1;
-  margin: 0;
-}
+/* FOOTER */
 
 footer {
   text-align: center;
   padding: 24px 16px;
-  color: #777;
-  font-size: 13px;
+  color: var(--muted);
+  font-size: 12px;
 }
 
+/* MOBILE */
+
 @media (max-width: 480px) {
-  header h1 {
-    font-size: 28px;
+  .brand-name {
+    font-size: 36px;
+    letter-spacing: 6px;
   }
 
-  main {
-    padding: 12px;
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box button {
+    width: 100%;
   }
 
   .actions {
@@ -172,96 +489,16 @@ footer {
   .actions button {
     width: 100%;
   }
-
-  select,
-  input,
-  button {
-    font-size: 15px;
-    padding: 13px;
-  }
-
-  #pdfHeader,
-  #cultoPlayerHeader {
-    display: block;
-  }
-
-  #cultoCounter {
-    display: block;
-    margin-top: 8px;
-    font-size: 13px;
-  }
-}
-
-/* Controles do leitor: ficam escondidos para não atrapalhar a leitura */
-.modal #pdfHeader,
-.modal #cultoPlayerHeader,
-.modal #cultoControls {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-}
-
-.modal.show-controls #pdfHeader,
-.modal.show-controls #cultoPlayerHeader,
-.modal.show-controls #cultoControls {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.control-hotspot {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  margin: 0;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.45);
-  color: white;
-  z-index: 100000;
-  font-size: 20px;
-}
-
-.modal.show-controls .control-hotspot {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-
-/* Melhor leitura do PDF no iPhone quando virar para horizontal */
-.modal {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
-#pdfViewer,
-#cultoViewer {
-  height: 100%;
 }
 
 @media screen and (orientation: landscape) {
-  #pdfViewer,
-  #cultoViewer {
-    width: 100vw;
-    height: 100vh;
-  }
-
-  #pdfHeader,
-  #cultoPlayerHeader,
-  #cultoControls {
-    position: absolute;
-    left: 0;
-    right: 0;
-    z-index: 100001;
-  }
-
   #pdfHeader,
   #cultoPlayerHeader {
-    top: 0;
+    min-height: 46px;
   }
 
-  #cultoControls {
-    bottom: 0;
+  #pdfViewer,
+  #cultoViewer {
+    height: 100vh;
   }
 }

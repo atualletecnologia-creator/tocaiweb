@@ -1,189 +1,186 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1.0">
-
-<title>Tocai</title>
-
-<link rel="stylesheet"
-href="style.css?v=12">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tocai</title>
+  <link rel="stylesheet" href="style.css?v=40">
 </head>
 
 <body>
 
-<header>
+<section id="welcomeScreen" class="welcome-screen">
+  <div class="welcome-content">
 
-  <h1>Tocai</h1>
+    <div class="brand brand-white">
+      <div class="brand-mark">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <i></i>
+      </div>
 
-  <p>
-    Facilitando a vida do Instrumentista
+      <div class="brand-name">
+        TOCAI
+      </div>
+    </div>
+
+    <p class="welcome-subtitle">
+      Facilitando a vida do Instrumentista
+    </p>
+
+    <select id="welcomeInstrumentSelect">
+      <option value="">Selecione seu instrumento</option>
+    </select>
+
+    <button onclick="saveInstrumentAndEnter()">
+      Entrar
+    </button>
+
+  </div>
+</section>
+
+<section id="appScreen" class="app-screen hidden">
+
+  <header class="app-header">
+
+    <button class="menu-button" onclick="openMenu()">
+      ☰
+    </button>
+
+    <div class="brand brand-burgundy small">
+      <div class="brand-mark">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <i></i>
+      </div>
+
+      <div class="brand-name">
+        TOCAI
+      </div>
+    </div>
+
+    <div class="header-spacer"></div>
+
+  </header>
+
+  <main class="app-main">
+
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Buscar partitura..."
+      >
+
+      <button onclick="searchPDFs()">
+        Buscar
+      </button>
+    </div>
+
+    <div id="selectedInstrumentLabel"></div>
+
+    <div id="results"></div>
+
+  </main>
+
+  <footer>
+    © 2026 Atualle Tecnologia. Todos os direitos reservados.
+  </footer>
+
+</section>
+
+<div id="sideMenuOverlay" class="side-menu-overlay" onclick="closeMenu()"></div>
+
+<nav id="sideMenu" class="side-menu">
+
+  <div class="menu-brand">
+    <div class="brand brand-white small">
+      <div class="brand-mark">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <i></i>
+      </div>
+
+      <div class="brand-name">
+        TOCAI
+      </div>
+    </div>
+  </div>
+
+  <button onclick="showCultoPage()">
+    Lista de Culto
+  </button>
+
+  <button onclick="showUploadPage()">
+    Enviar partitura
+  </button>
+
+  <button onclick="changeInstrument()">
+    Trocar instrumento
+  </button>
+
+  <button onclick="closeMenu()">
+    Fechar menu
+  </button>
+
+</nav>
+
+<section id="cultoPage" class="page-panel hidden">
+
+  <div class="page-header">
+    <button onclick="closePagePanels()">← Voltar</button>
+    <h2>Lista de Culto</h2>
+  </div>
+
+  <button onclick="openCultoPlayer()">
+    Abrir Lista
+  </button>
+
+  <button class="secondary" onclick="clearCultoList()">
+    Limpar Lista
+  </button>
+
+  <div id="cultoList"></div>
+
+</section>
+
+<section id="uploadPage" class="page-panel hidden">
+
+  <div class="page-header">
+    <button onclick="closePagePanels()">← Voltar</button>
+    <h2>Enviar partitura</h2>
+  </div>
+
+  <p class="muted">
+    O PDF será enviado para o instrumento selecionado.
   </p>
 
-</header>
-
-<main>
-
-  <button class="secondary"
-  onclick="toggleCultoList()">
-
-    Lista de Culto
-
-  </button>
-
-  <section id="cultoPanel"
-  class="hidden panel">
-
-    <h2>
-      Lista de Culto
-    </h2>
-
-    <button onclick="openCultoPlayer()">
-      Abrir Lista
-    </button>
-
-    <button class="secondary" onclick="clearCultoList()">
-      Limpar Lista
-    </button>
-
-    <div id="cultoList"></div>
-
-  </section>
-
-  <button class="secondary"
-  onclick="toggleUploadPanel()">
-
-    Enviar partitura
-
-  </button>
-
-  <section id="uploadPanel"
-  class="hidden panel">
-
-    <h2>
-      Enviar partitura
-    </h2>
-
-    <input
-      type="file"
-      id="uploadFile"
-      accept="application/pdf"
-    >
-
-    <button onclick="uploadPDF()">
-      Enviar PDF para este instrumento
-    </button>
-
-    <p id="uploadStatus"></p>
-
-  </section>
-
-  <select id="instrumentSelect">
-
-    <option value="1rzBliOlp0dZ5pJxqhG-c3SgJaQE7OdS7">
-      Bateria
-    </option>
-
-    <option value="1N71fnDx_W30RFT-lQs3RNKoMcjmE61Y_">
-      Baixo
-    </option>
-
-    <option value="1jwo1MhjGV7rnA8U-7tlb1wyA3eHo4tBG">
-      Basson
-    </option>
-
-    <option value="13VCpSJAEqEOw5i5OGhXFceLFBVpsziYF">
-      Clarinete
-    </option>
-
-    <option value="1ZY0Wp8uhFEKawQZ30Kezql9MN9ceLavz">
-      Cordas
-    </option>
-
-    <option value="1XyxqpM9rfdMpNwcnh7LH04ISrHC-vkB2">
-      Fagote
-    </option>
-
-    <option value="1U7VU0Xmhmk0F2tuoZMNZRmJ0K5uxb-vg">
-      Flauta
-    </option>
-
-    <option value="1Sn9F7uUqCzi3RAtcQloakhYv9OoiV0an">
-      Flugel
-    </option>
-
-    <option value="1Glc2uShEsHPElWHRHuRnG15hci542USp">
-      Horn
-    </option>
-
-    <option value="1qjgqnO0-3KQZLdiISywGIUMZVyYtHjEV">
-      Oboé
-    </option>
-
-    <option value="1N7iV-hi5XnZmgYXZExx3Bw-dqjWX_Qji">
-      Saxofone
-    </option>
-
-    <option value="1-W7n5LrIZwXyfA8UaKDnegIkl2AyZOXb">
-      Trombone
-    </option>
-
-    <option value="1Ovadf_hZuBiRU2z1j_l8213YOIL3pDgd">
-      Trompa
-    </option>
-
-    <option value="1r5ptZPob16SjwmUY8sf6OLLAeul8szIc">
-      Trompete
-    </option>
-
-    <option value="1WglM_Y4iG_EvcKfyWf1tNCBiWYwF9ErW">
-      Viola
-    </option>
-
-    <option value="1lXlFlQcF7QjWT6X2tZDSTL-AdeWcJ1x6">
-      Violino
-    </option>
-
-    <option value="1-8VhVQH46CNg2VmO1tNbDFJfos1QDNFN">
-      Violoncelo
-    </option>
-
-    <option value="1MOrKKM1RKnyUHJIbpTnDvRuJJwTUMS3p">
-      Voz e Piano
-    </option>
-
-  </select>
-
   <input
-    type="text"
-    id="searchInput"
-    placeholder="Buscar partitura..."
+    type="file"
+    id="uploadFile"
+    accept="application/pdf"
   >
 
-  <button onclick="searchPDFs()">
-    Buscar
+  <button onclick="uploadPDF()">
+    Enviar PDF
   </button>
 
-  <div id="results"></div>
+  <p id="uploadStatus"></p>
 
-</main>
+</section>
 
-<footer>
+<div id="pdfModal" class="modal" onclick="togglePDFControls()">
 
-  © 2026 Atualle Tecnologia.
-  Todos os direitos reservados.
-
-</footer>
-
-<div id="pdfModal"
-class="modal">
-
-  <div id="pdfHeader">
+  <div id="pdfHeader" onclick="event.stopPropagation()">
 
     <button onclick="closePDF()">
       Fechar
@@ -193,14 +190,11 @@ class="modal">
 
   <iframe id="pdfViewer"></iframe>
 
-  <button class="control-hotspot" onclick="togglePDFControls()">☰</button>
-
 </div>
 
-<div id="cultoPlayer"
-class="modal">
+<div id="cultoPlayer" class="modal" onclick="toggleCultoControls()">
 
-  <div id="cultoPlayerHeader">
+  <div id="cultoPlayerHeader" onclick="event.stopPropagation()">
 
     <button onclick="closeCultoPlayer()">
       Fechar
@@ -212,9 +206,7 @@ class="modal">
 
   <iframe id="cultoViewer"></iframe>
 
-  <button class="control-hotspot" onclick="toggleCultoControls()">☰</button>
-
-  <div id="cultoControls">
+  <div id="cultoControls" onclick="event.stopPropagation()">
 
     <button onclick="previousCultoMusic()">
       Anterior
@@ -228,7 +220,7 @@ class="modal">
 
 </div>
 
-<script src="app.js?v=12"></script>
+<script src="app.js?v=40"></script>
 
 </body>
 </html>

@@ -3,13 +3,124 @@ const API_KEY = "AIzaSyB5S62bfDT-aGKNWfKRrnbIGbh70wJ8Eug";
 const UPLOAD_URL =
   'https://script.google.com/macros/s/AKfycbzTyWioDzkQ06ypuRI9ELmTeNXWYX7t_no5Y7N9kYEn8uKrd5yPMZh4MRhveYshK7r4-A/exec';
 
+var instruments = [
+  { name: 'Bateria', id: '1rzBliOlp0dZ5pJxqhG-c3SgJaQE7OdS7' },
+  { name: 'Baixo', id: '1N71fnDx_W30RFT-lQs3RNKoMcjmE61Y_' },
+  { name: 'Basson', id: '1jwo1MhjGV7rnA8U-7tlb1wyA3eHo4tBG' },
+  { name: 'Clarinete', id: '13VCpSJAEqEOw5i5OGhXFceLFBVpsziYF' },
+  { name: 'Cordas', id: '1ZY0Wp8uhFEKawQZ30Kezql9MN9ceLavz' },
+  { name: 'Fagote', id: '1XyxqpM9rfdMpNwcnh7LH04ISrHC-vkB2' },
+  { name: 'Flauta', id: '1U7VU0Xmhmk0F2tuoZMNZRmJ0K5uxb-vg' },
+  { name: 'Flugel', id: '1Sn9F7uUqCzi3RAtcQloakhYv9OoiV0an' },
+  { name: 'Horn', id: '1Glc2uShEsHPElWHRHuRnG15hci542USp' },
+  { name: 'Oboé', id: '1qjgqnO0-3KQZLdiISywGIUMZVyYtHjEV' },
+  { name: 'Saxofone', id: '1N7iV-hi5XnZmgYXZExx3Bw-dqjWX_Qji' },
+  { name: 'Trombone', id: '1-W7n5LrIZwXyfA8UaKDnegIkl2AyZOXb' },
+  { name: 'Trompa', id: '1Ovadf_hZuBiRU2z1j_l8213YOIL3pDgd' },
+  { name: 'Trompete', id: '1r5ptZPob16SjwmUY8sf6OLLAeul8szIc' },
+  { name: 'Viola', id: '1WglM_Y4iG_EvcKfyWf1tNCBiWYwF9ErW' },
+  { name: 'Violino', id: '1lXlFlQcF7QjWT6X2tZDSTL-AdeWcJ1x6' },
+  { name: 'Violoncelo', id: '1-8VhVQH46CNg2VmO1tNbDFJfos1QDNFN' },
+  { name: 'Voz e Piano', id: '1MOrKKM1RKnyUHJIbpTnDvRuJJwTUMS3p' }
+];
+
 var cultoList = [];
 var currentCultoIndex = 0;
 var pdfControlsTimeout = null;
 var cultoControlsTimeout = null;
+var selectedInstrumentId = '';
+var selectedInstrumentName = '';
 
-loadCultoList();
-setupSearchEnter();
+initApp();
+
+function initApp() {
+  populateInstrumentSelect();
+  setupSearchEnter();
+  loadCultoList();
+
+  var savedInstrument = localStorage.getItem('tocai_selected_instrument');
+  var savedInstrumentName = localStorage.getItem('tocai_selected_instrument_name');
+
+  if (savedInstrument) {
+    selectedInstrumentId = savedInstrument;
+    selectedInstrumentName = savedInstrumentName || getInstrumentName(savedInstrument);
+    enterApp();
+  } else {
+    showWelcome();
+  }
+}
+
+function populateInstrumentSelect() {
+  var select = document.getElementById('welcomeInstrumentSelect');
+
+  if (!select) {
+    return;
+  }
+
+  for (var i = 0; i < instruments.length; i++) {
+    var option = document.createElement('option');
+    option.value = instruments[i].id;
+    option.textContent = instruments[i].name;
+    select.appendChild(option);
+  }
+}
+
+function getInstrumentName(id) {
+  for (var i = 0; i < instruments.length; i++) {
+    if (instruments[i].id === id) {
+      return instruments[i].name;
+    }
+  }
+
+  return 'Instrumento';
+}
+
+function showWelcome() {
+  document.getElementById('welcomeScreen').classList.remove('hidden');
+  document.getElementById('appScreen').classList.add('hidden');
+}
+
+function saveInstrumentAndEnter() {
+  var select = document.getElementById('welcomeInstrumentSelect');
+
+  if (!select.value) {
+    alert('Selecione seu instrumento');
+    return;
+  }
+
+  selectedInstrumentId = select.value;
+  selectedInstrumentName = getInstrumentName(selectedInstrumentId);
+
+  localStorage.setItem('tocai_selected_instrument', selectedInstrumentId);
+  localStorage.setItem('tocai_selected_instrument_name', selectedInstrumentName);
+
+  enterApp();
+}
+
+function enterApp() {
+  document.getElementById('welcomeScreen').classList.add('hidden');
+  document.getElementById('appScreen').classList.remove('hidden');
+
+  var label = document.getElementById('selectedInstrumentLabel');
+
+  if (label) {
+    label.innerHTML = 'Instrumento: ' + selectedInstrumentName;
+  }
+}
+
+function changeInstrument() {
+  closeMenu();
+
+  localStorage.removeItem('tocai_selected_instrument');
+  localStorage.removeItem('tocai_selected_instrument_name');
+
+  selectedInstrumentId = '';
+  selectedInstrumentName = '';
+
+  document.getElementById('results').innerHTML = '';
+
+  showWelcome();
+}
 
 function setupSearchEnter() {
   setTimeout(function () {
@@ -36,16 +147,23 @@ function setupSearchEnter() {
 }
 
 function searchPDFs() {
-  var folderId = document.getElementById('instrumentSelect').value;
+  if (!selectedInstrumentId) {
+    alert('Selecione seu instrumento primeiro');
+    return;
+  }
+
   var query = document.getElementById('searchInput').value;
 
   var url =
     "https://www.googleapis.com/drive/v3/files?" +
-    "q='" + folderId + "' in parents " +
+    "q='" + selectedInstrumentId + "' in parents " +
     "and mimeType='application/pdf' " +
     "and name contains '" + query + "'" +
     "&fields=files(id,name)" +
     "&key=" + API_KEY;
+
+  var results = document.getElementById('results');
+  results.innerHTML = '<p class="muted">Buscando...</p>';
 
   var xhr = new XMLHttpRequest();
 
@@ -71,7 +189,7 @@ function renderFiles(files) {
   results.innerHTML = '';
 
   if (files.length === 0) {
-    results.innerHTML = '<p>Nenhuma partitura encontrada.</p>';
+    results.innerHTML = '<p class="muted">Nenhuma partitura encontrada.</p>';
     return;
   }
 
@@ -155,7 +273,11 @@ function saveOffline(fileId) {
 function uploadPDF() {
   var input = document.getElementById('uploadFile');
   var status = document.getElementById('uploadStatus');
-  var folderId = document.getElementById('instrumentSelect').value;
+
+  if (!selectedInstrumentId) {
+    alert('Selecione seu instrumento primeiro');
+    return;
+  }
 
   if (!input.files || input.files.length === 0) {
     alert('Escolha um PDF primeiro');
@@ -176,7 +298,7 @@ function uploadPDF() {
   reader.onload = function () {
     var formData = new FormData();
 
-    formData.append('folderId', folderId);
+    formData.append('folderId', selectedInstrumentId);
     formData.append('fileName', file.name);
     formData.append('mimeType', file.type);
     formData.append('fileBase64', reader.result);
@@ -219,8 +341,6 @@ function addToCulto(id, name) {
     name: name
   });
 
-  saveCultoList();
-
   renderCultoList();
 
   alert('Adicionado à lista de culto');
@@ -237,15 +357,10 @@ function removeFromCulto(id) {
 
   cultoList = newList;
 
-  saveCultoList();
-
   renderCultoList();
 }
 
-function saveCultoList() {
-}
 function loadCultoList() {
-
   cultoList = [];
 
   localStorage.removeItem(
@@ -267,7 +382,7 @@ function renderCultoList() {
   container.innerHTML = '';
 
   if (cultoList.length === 0) {
-    container.innerHTML = '<p>Nenhuma música adicionada.</p>';
+    container.innerHTML = '<p class="muted">Nenhuma música adicionada.</p>';
     return;
   }
 
@@ -289,27 +404,45 @@ function renderCultoList() {
   }
 }
 
-
 function clearCultoList() {
   if (!confirm('Deseja limpar toda a lista de culto?')) {
     return;
   }
 
   cultoList = [];
-  saveCultoList();
   renderCultoList();
 }
 
-function toggleCultoList() {
-  var panel = document.getElementById('cultoPanel');
-
-  panel.classList.toggle('hidden');
+function openMenu() {
+  document.getElementById('sideMenu').classList.add('open');
+  document.getElementById('sideMenuOverlay').classList.add('open');
 }
 
-function toggleUploadPanel() {
-  var panel = document.getElementById('uploadPanel');
+function closeMenu() {
+  document.getElementById('sideMenu').classList.remove('open');
+  document.getElementById('sideMenuOverlay').classList.remove('open');
+}
 
-  panel.classList.toggle('hidden');
+function showCultoPage() {
+  closeMenu();
+  document.getElementById('cultoPage').classList.remove('hidden');
+  renderCultoList();
+}
+
+function showUploadPage() {
+  closeMenu();
+  document.getElementById('uploadPage').classList.remove('hidden');
+
+  var status = document.getElementById('uploadStatus');
+
+  if (status) {
+    status.innerHTML = '';
+  }
+}
+
+function closePagePanels() {
+  document.getElementById('cultoPage').classList.add('hidden');
+  document.getElementById('uploadPage').classList.add('hidden');
 }
 
 function openCultoPlayer() {
@@ -393,6 +526,7 @@ function closeCultoPlayer() {
 
   clearTimeout(cultoControlsTimeout);
 }
+
 window.addEventListener(
   'beforeunload',
   function () {
