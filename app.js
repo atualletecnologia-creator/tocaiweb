@@ -341,6 +341,8 @@ function addToCulto(id, name) {
     name: name
   });
 
+  saveCultoList();
+
   renderCultoList();
 
   alert('Adicionado à lista de culto');
@@ -357,20 +359,34 @@ function removeFromCulto(id) {
 
   cultoList = newList;
 
+  saveCultoList();
+
   renderCultoList();
+}
+
+function saveCultoList() {
+  localStorage.setItem(
+    'tocai_culto_list',
+    JSON.stringify(cultoList)
+  );
 }
 
 function loadCultoList() {
   var saved = localStorage.getItem('tocai_culto_list');
 
   if (saved) {
-    cultoList = JSON.parse(saved);
+    try {
+      cultoList = JSON.parse(saved) || [];
+    } catch (e) {
+      cultoList = [];
+    }
   }
 
   setTimeout(function () {
     renderCultoList();
   }, 100);
 }
+
 
 function renderCultoList() {
   var container = document.getElementById('cultoList');
@@ -410,6 +426,8 @@ function clearCultoList() {
   }
 
   cultoList = [];
+  saveCultoList();
+
   renderCultoList();
 }
 
@@ -526,4 +544,3 @@ function closeCultoPlayer() {
 
   clearTimeout(cultoControlsTimeout);
 }
-
