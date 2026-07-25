@@ -460,6 +460,41 @@ button.secondary {
   gap: 10px;
 }
 
+
+/* Controles do visualizador sempre acima do iframe */
+#pdfHeader,
+#cultoPlayerHeader,
+#cultoControls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 30;
+}
+
+#pdfHeader,
+#cultoPlayerHeader {
+  top: 0;
+}
+
+#cultoControls {
+  bottom: 0;
+  justify-content: space-between;
+}
+
+.viewer-tap-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: transparent;
+  display: block;
+  touch-action: manipulation;
+}
+
+#pdfModal.show-controls .viewer-tap-layer,
+#cultoPlayer.show-controls .viewer-tap-layer {
+  pointer-events: none;
+}
+
 /* FOOTER */
 
 footer {

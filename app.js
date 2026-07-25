@@ -544,22 +544,3 @@ function closeCultoPlayer() {
 
   clearTimeout(cultoControlsTimeout);
 }
-
-
-function showPdfControls(){
- var c=document.getElementById('pdfControls');
- if(!c)return;
- c.style.display='flex';
- clearTimeout(window.__pdfHideTimer);
- window.__pdfHideTimer=setTimeout(function(){c.style.display='none';},3000);
-}
-
-document.addEventListener('DOMContentLoaded',function(){
- ['pdfViewer','pdfModal'].forEach(function(id){
-   var el=document.getElementById(id);
-   if(el){
-     el.addEventListener('click',showPdfControls);
-     el.addEventListener('touchstart',showPdfControls,{passive:true});
-   }
- });
-});

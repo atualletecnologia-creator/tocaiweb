@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tocai</title>
-  <link rel="stylesheet" href="style.css?v=41">
+  <link rel="stylesheet" href="style.css?v=42">
 </head>
 
 <body>
@@ -178,7 +178,7 @@
 
 </section>
 
-<div id="pdfModal" class="modal" onclick="togglePDFControls()">
+<div id="pdfModal" class="modal">
 
   <div id="pdfHeader" onclick="event.stopPropagation()">
 
@@ -190,9 +190,11 @@
 
   <iframe id="pdfViewer"></iframe>
 
+  <div id="pdfTapLayer" class="viewer-tap-layer" onclick="showPDFControls()"></div>
+
 </div>
 
-<div id="cultoPlayer" class="modal" onclick="toggleCultoControls()">
+<div id="cultoPlayer" class="modal">
 
   <div id="cultoPlayerHeader" onclick="event.stopPropagation()">
 
@@ -205,6 +207,8 @@
   </div>
 
   <iframe id="cultoViewer"></iframe>
+
+  <div id="cultoTapLayer" class="viewer-tap-layer" onclick="showCultoControls()"></div>
 
   <div id="cultoControls" onclick="event.stopPropagation()">
 
@@ -220,7 +224,7 @@
 
 </div>
 
-<script src="app.js?v=41"></script>
+<script src="app.js?v=42"></script>
 
 </body>
 </html>
